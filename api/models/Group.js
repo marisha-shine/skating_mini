@@ -6,7 +6,6 @@
  */
 
 module.exports = {
-  dominant: true,
   attributes: {
     name: {
       type: 'string',
