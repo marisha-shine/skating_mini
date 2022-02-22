@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Регистрация</title>
+</head>
+
+<body>
+    <div class="container">
+        <h4>Добавить группу</h4>
+        <form>
+            <div class="form-group row">
+                <label for="input_group_name" class="col-sm-2 col-form-label">Название группы</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="input_group_name" placeholder="Название группы" />
+                </div>
+            </div>
+            <div class="form-group row pt-2">
+                <label for="input_group_number" class="col-sm-2 col-form-label">Номер группы в программе</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="input_group_number" placeholder="Номер группы в программе" />
+                </div>
+            </div>
+            <fieldset class="form-group">
+                <div class="row">
+                    <legend class="col-form-label col-sm-2 pt-0">Тип</legend>
+                    <div class="col-sm-10">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="groupType" id="radio_mass_sport" value="mass_sport" checked />
+                            <label class="form-check-label" for="mass_sport">
+                                Массовый спорт
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="groupType" id="radio_cup" value="cup">
+                            <label class="form-check-label" for="radio_cup">
+                                Кубок
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-group pt-2">
+                <label for="input_group_name" class="col-sm-2 col-form-label">Танцы</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="sw" value="Sw" />
+                    <label class="form-check-label" for="sw">Sw</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="tango" value="T" />
+                    <label class="form-check-label" for="tango">T</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="vw" value="Vw" />
+                    <label class="form-check-label" for="vw">Vw</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="quick" value="Q" />
+                    <label class="form-check-label" for="quick">Q</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="samba" value="S" />
+                    <label class="form-check-label" for="samba">S</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="ch" value="Ch" />
+                    <label class="form-check-label" for="ch">Ch</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="rumba" value="R" />
+                    <label class="form-check-label" for="rumba">R</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="jive" value="J" />
+                    <label class="form-check-label" for="jive">J</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="choreo" value="Choreo" />
+                    <label class="form-check-label" for="choreo">Choreo</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <a href="javascript:void(0)" class="btn btn-primary" onclick="addGroup()">Добавить</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br></br>
+    <div class="container">
+        <h4>Добавить участника</h4>
+        <form>
+            <div class="form-group row">
+                <label for="input_member_name" class="col-sm-2 col-form-label">Фамилия Имя</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="input_member_name" placeholder="Фамилия Имя участника" />
+                </div>
+            </div>
+            <div class="form-group row pt-2">
+                <label for="input_member_number" class="col-sm-2 col-form-label">Номер участника</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="input_member_number" placeholder="Номер участника" />
+                </div>
+            </div>
+            <div class="form-group row pt-2">
+                <label for="input_group_for_member" class="col-sm-2 col-form-label">Группа</label>
+                <div class="col-sm-10">
+                    <select id="input_group_for_member" class="form-select select-group-for-member">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <a href="javascript:void(0)" class="btn btn-primary" onclick="addMember()">Добавить</a>
+                </div>
+            </div>
+        </form>
+        <div class="pt-5">
+            <h4>Участники</h4>
+            <div id="group_list"></div>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+
+</html>
