@@ -37,6 +37,10 @@ module.exports = {
       isIn: ['cup', 'mass_sport'],
       defaultsTo: 'cup'
     },
+
+    active: {
+      type: 'boolean'
+    }
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝

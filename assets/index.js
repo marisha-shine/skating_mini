@@ -179,28 +179,29 @@ async function showGroupsPage(){
     groupList.innerHTML = '';
     for (let i = 0; i < groups.length; i++) {
         let group = groups[i];
-        
-        let groupName = group.name;
-        if (group.type == 'cup'){
-            groupName += ' <i class="fa fa-trophy"></i>';
-        }
-        let buttons = '';
-        let membersCount = group.members.length;
-        for (let i = 0; i < group.dances.length; i++) {
-            const dance = group.dances[i];
-            let ratesCount = group.rates.filter(x => x.judge == localStorage.judge && x.dance == dance.id).length;
-            let danceFilledClass = 'btn-outline-info';
-            if (membersCount == ratesCount) {
-                danceFilledClass = 'btn-info';
+        if (group.active) {
+            let groupName = group.name;
+            if (group.type == 'cup'){
+                groupName += ' <i class="fa fa-trophy"></i>';
             }
-            buttons += `<button type="button" class="btn ${danceFilledClass}"  onclick="danceSelected(${group.id}, ${dance.id})">${dance.name}</button>`
+            let buttons = '';
+            let membersCount = group.members.length;
+            for (let i = 0; i < group.dances.length; i++) {
+                const dance = group.dances[i];
+                let ratesCount = group.rates.filter(x => x.judge == localStorage.judge && x.dance == dance.id).length;
+                let danceFilledClass = 'btn-outline-info';
+                if (membersCount == ratesCount) {
+                    danceFilledClass = 'btn-info';
+                }
+                buttons += `<button type="button" class="btn ${danceFilledClass}"  onclick="danceSelected(${group.id}, ${dance.id})">${dance.name}</button>`
+            }
+            groupList.innerHTML += `<li class="list-group-item list-group-item-action">
+                <h6>${groupName}</h6>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    ${buttons}
+                </div>
+            </li>`;
         }
-        groupList.innerHTML += `<li class="list-group-item list-group-item-action">
-            <h6>${groupName}</h6>
-            <div class="btn-group" role="group" aria-label="Basic example">
-                ${buttons}
-            </div>
-        </li>`;
     }
 }
 
