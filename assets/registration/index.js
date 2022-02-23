@@ -21,10 +21,18 @@ async function init() {
         }
         let active = group.active;
         let groupStatus = 'Активировать';
+        let buttonColor = 'btn-outline-success';
         if (active) {
             groupStatus = 'Деактивировать';
+            buttonColor = 'btn-outline-danger';
         }
-        groupList.innerHTML += `<div class="d-flex justify-content-between"><h4>${groupName}</h4><a href="javascript:void(0)" class="btn btn-sm btn-danger" onclick="setGroupStatus(${group.id}, ${group.active})">${groupStatus}</a><a href="javascript:void(0)" class="btn btn-sm btn-danger" onclick="deleteGroup(${group.id})">Удалить</a></div>`;
+        groupList.innerHTML += `<div class="d-flex justify-content-between">
+            <h4>${groupName}</h4>
+            <div class="btn-group">
+                <a href="javascript:void(0)" class="btn btn-sm ${buttonColor}" onclick="setGroupStatus(${group.id}, ${group.active})">${groupStatus}</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-outline-danger" onclick="deleteGroup(${group.id})">Удалить</a>
+            </div>
+        </div>`;
         let tableInfos = [];
         for (let j = 0; j < group.members.length; j++) {
             const member = group.members[j];
@@ -138,7 +146,7 @@ async function deleteMember(id) {
 
 async function deleteGroup(id) {
     let response = await fetch(`/group/${id}`, {
-        method: 'PUT',
+        method: 'DELETE',
     });
     if (!response.ok) {
         alert('Ошибка HTTP: ' + response.status);
@@ -148,7 +156,6 @@ async function deleteGroup(id) {
 }
 
 async function setGroupStatus(id, active) {
-    console.log(id, active);
     let response = await fetch(`/group/${id}`, {
         method: 'PATCH',
         body: JSON.stringify({active: !active,})

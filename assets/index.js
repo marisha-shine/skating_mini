@@ -167,7 +167,7 @@ async function showGroupsPage(){
     membersPage.classList.add("d-none");
     groupsPage.classList.remove("d-none");
 
-    let response = await fetch('/group?sort=sortOrder ASC');
+    let response = await fetch('/group?sort=sortOrder ASC&active=true');
 
     if (response.ok) {
         groups = await response.json();
@@ -179,29 +179,27 @@ async function showGroupsPage(){
     groupList.innerHTML = '';
     for (let i = 0; i < groups.length; i++) {
         let group = groups[i];
-        if (group.active) {
-            let groupName = group.name;
-            if (group.type == 'cup'){
-                groupName += ' <i class="fa fa-trophy"></i>';
-            }
-            let buttons = '';
-            let membersCount = group.members.length;
-            for (let i = 0; i < group.dances.length; i++) {
-                const dance = group.dances[i];
-                let ratesCount = group.rates.filter(x => x.judge == localStorage.judge && x.dance == dance.id).length;
-                let danceFilledClass = 'btn-outline-info';
-                if (membersCount == ratesCount) {
-                    danceFilledClass = 'btn-info';
-                }
-                buttons += `<button type="button" class="btn ${danceFilledClass}"  onclick="danceSelected(${group.id}, ${dance.id})">${dance.name}</button>`
-            }
-            groupList.innerHTML += `<li class="list-group-item list-group-item-action">
-                <h6>${groupName}</h6>
-                <div class="btn-group" role="group" aria-label="Basic example">
-                    ${buttons}
-                </div>
-            </li>`;
+        let groupName = group.name;
+        if (group.type == 'cup'){
+            groupName += ' <i class="fa fa-trophy"></i>';
         }
+        let buttons = '';
+        let membersCount = group.members.length;
+        for (let i = 0; i < group.dances.length; i++) {
+            const dance = group.dances[i];
+            let ratesCount = group.rates.filter(x => x.judge == localStorage.judge && x.dance == dance.id).length;
+            let danceFilledClass = 'btn-outline-info';
+            if (membersCount == ratesCount && membersCount != 0) {
+                danceFilledClass = 'btn-info';
+            }
+            buttons += `<button type="button" class="btn ${danceFilledClass}"  onclick="danceSelected(${group.id}, ${dance.id})">${dance.name}</button>`
+        }
+        groupList.innerHTML += `<li class="list-group-item list-group-item-action">
+            <h6>${groupName}</h6>
+            <div class="btn-group">
+                ${buttons}
+            </div>
+        </li>`;
     }
 }
 
