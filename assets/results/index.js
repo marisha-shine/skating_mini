@@ -34,6 +34,7 @@ async function init() {
                 result = memberPlaces.reduce( ( p, c ) => p + c, 0 );
             } else {
                 result = average(memberPlaces) || 0;
+                result = result.toFixed(1);
             }
             let memberRatesByDanceName = groupByKey(memberRates, 'dance');
             let judging = '';
@@ -48,9 +49,9 @@ async function init() {
                 judging += `<b>${danceName}</b>: ${danceRates.join(', ')}<br/>`;
             }
             tableInfos.push({
-                row: `<tr><td>${member.number}</td><td>${member.name}</td><td>${judging}</td><td>${result.toFixed(1)}</td><td>${memberPlaces.length}</td></tr>`,
+                row: `<tr><td>${member.number}</td><td>${member.name}</td><td>${judging}</td><td>${result}</td><td>${memberPlaces.length}</td></tr>`,
                 result: result
-            });
+            });s
         }
         let tableInfo = '';
         if (group.type == 'cup'){
