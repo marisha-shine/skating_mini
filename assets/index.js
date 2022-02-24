@@ -133,7 +133,9 @@ async function saveRates() {
     }
     for (let i = 0; i < selectsForUpdate.length; i++) {
         const select = selectsForUpdate[i];
-        if (!select.value) continue;
+        if (!select.value) {
+            await deleteRate(Number(select.getAttribute('data-rate')));
+        };
         let member = select.id.replace('place_', '');
         ratesForUpdate.push( {
             "id":  Number(select.getAttribute('data-rate')),
@@ -161,6 +163,13 @@ async function saveRates() {
     await showGroupsPage();
 }
 
+async function deleteRate(id){
+    let response = await fetch(`/rate/${id}`, {
+        method: 'DELETE',
+    });
+    if (!response.ok) alert('Ошибка HTTP: ' + response.status);
+}
+
 async function showGroupsPage(){
     let groupsPage = document.querySelector('#groups_page');
     let membersPage = document.querySelector('#members_page');
@@ -179,12 +188,13 @@ async function showGroupsPage(){
     groupList.innerHTML = '';
     for (let i = 0; i < groups.length; i++) {
         let group = groups[i];
-        let groupName = group.name;
+        let groupName = '';
         if (group.type == 'cup'){
             groupName += ' <i class="fa fa-trophy"></i>';
         }
-        let buttons = '';
         let membersCount = group.members.length;
+        groupName += ` ${group.name} (участников - ${membersCount})`;
+        let buttons = '';
         for (let i = 0; i < group.dances.length; i++) {
             const dance = group.dances[i];
             let ratesCount = group.rates.filter(x => x.judge == localStorage.judge && x.dance == dance.id).length;

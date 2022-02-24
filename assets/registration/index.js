@@ -15,10 +15,11 @@ async function init() {
     for (let i = 0; i < groups.length; i++) {
         let group = groups[i];
         insertOption(group.id, group.name, groupSelect);
-        let groupName = group.name;
+        let groupName = '';
         if (group.type == 'cup'){
             groupName += ' <i class="fa fa-trophy"></i>';
         }
+        groupName += ` ${group.name} (участников - ${group.members.length})`;
         let active = group.active;
         let groupStatus = 'Активировать';
         let buttonColor = 'btn-outline-success';

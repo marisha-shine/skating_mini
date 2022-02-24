@@ -13,10 +13,11 @@ async function init() {
     groupList.innerHTML = '';
     for (let i = 0; i < groups.length; i++) {
         let group = groups[i];
-        let groupName = group.name;
+        let groupName = '';
         if (group.type == 'cup'){
             groupName += ' <i class="fa fa-trophy"></i>';
         }
+        groupName += ` ${group.name} (участников - ${group.members.length})`;
         groupList.innerHTML += `<h4>${groupName}</h4>`;
         let tableInfos = [];
         for (let j = 0; j < group.members.length; j++) {
