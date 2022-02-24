@@ -72,7 +72,11 @@ function danceSelected(groupId, danceId){
     let danceName = group.dances.find(x => x.id == danceId).name;
     groupName += ` - ${danceName}`;
     document.querySelector("#members_title").innerHTML = groupName;
-    let members = group.members;
+    let members = group.members.sort((a, b) => {
+        if (a.number < b.number) return -1;
+        if (a.number > b.number) return 1;
+        return 0;
+    });
     let memberList = document.querySelector('#member_list');
     memberList.setAttribute("data-group", groupId);
     memberList.setAttribute("data-dance", danceId);
@@ -113,6 +117,7 @@ async function saveRates() {
     let placeSelects = Array.from(document.querySelectorAll(`.place-select`));
     let ratesForUpdate = [];
     let ratesForCreate = [];
+    let ratesForDelete = [];
     let memberList = document.querySelector('#member_list');
     let group = memberList.getAttribute('data-group');
     let dance = memberList.getAttribute('data-dance');
@@ -133,17 +138,20 @@ async function saveRates() {
     }
     for (let i = 0; i < selectsForUpdate.length; i++) {
         const select = selectsForUpdate[i];
-        if (!select.value) {
-            await deleteRate(Number(select.getAttribute('data-rate')));
-        };
         let member = select.id.replace('place_', '');
-        ratesForUpdate.push( {
-            "id":  Number(select.getAttribute('data-rate')),
-            "judge": judge,
-            "group": Number(group),
-            "member": Number(member),
-            "place": Number(select.value)
-        });       
+        if (!select.value) {
+            ratesForDelete.push( {
+                id:  Number(select.getAttribute('data-rate'))
+            }); 
+        } else {
+            ratesForUpdate.push( {
+                id:  Number(select.getAttribute('data-rate')),
+                judge: judge,
+                group: Number(group),
+                member: Number(member),
+                place: Number(select.value)
+            }); 
+        }
     }
     if (ratesForCreate.length != 0) { 
         let response = await fetch('/rate/save', {
@@ -160,14 +168,15 @@ async function saveRates() {
         });
         if (!response.ok) alert('Ошибка HTTP: ' + response.status);
     }
-    await showGroupsPage();
-}
 
-async function deleteRate(id){
-    let response = await fetch(`/rate/${id}`, {
-        method: 'DELETE',
-    });
-    if (!response.ok) alert('Ошибка HTTP: ' + response.status);
+    if (ratesForDelete.length != 0) { 
+        let response = await fetch('/rate/remove', {
+            method: 'POST',
+            body: JSON.stringify(ratesForDelete)
+        });
+        if (!response.ok) alert('Ошибка HTTP: ' + response.status);
+    }
+    await showGroupsPage();
 }
 
 async function showGroupsPage(){

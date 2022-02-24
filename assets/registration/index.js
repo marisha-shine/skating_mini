@@ -35,6 +35,11 @@ async function init() {
             </div>
         </div>`;
         let tableInfos = [];
+        group.members = group.members.sort((a, b) => {
+            if (a.number < b.number) return -1;
+            if (a.number > b.number) return 1;
+            return 0;
+        })
         for (let j = 0; j < group.members.length; j++) {
             const member = group.members[j];
             tableInfos.push(`<tr><td>${member.number}</td><td>${member.name}</td><td><a href="javascript:void(0)" class="btn btn-sm btn-danger" onclick="deleteMember(${member.id})">Удалить</a></td></tr>`);
