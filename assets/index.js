@@ -69,7 +69,7 @@ function danceSelected(groupId, danceId){
     if (group.type == 'cup'){
         groupName += ' <i class="fa fa-trophy"></i>';
     }
-    let danceName = group.dances.find(x => x.id = danceId).name;
+    let danceName = group.dances.find(x => x.id == danceId).name;
     groupName += ` - ${danceName}`;
     document.querySelector("#members_title").innerHTML = groupName;
     let members = group.members;
