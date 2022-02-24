@@ -33,8 +33,7 @@ async function init() {
             if (group.type == 'cup'){
                 result = memberPlaces.reduce( ( p, c ) => p + c, 0 );
             } else {
-                result = average(memberPlaces) || 0;
-                result = result.toFixed(1);
+                result = average(memberPlaces).toFixed(1) || 0;
             }
             let memberRatesByDanceName = groupByKey(memberRates, 'dance');
             let judging = '';
@@ -51,7 +50,7 @@ async function init() {
             tableInfos.push({
                 row: `<tr><td>${member.number}</td><td>${member.name}</td><td>${judging}</td><td>${result}</td><td>${memberPlaces.length}</td></tr>`,
                 result: result
-            });s
+            });
         }
         let tableInfo = '';
         if (group.type == 'cup'){
