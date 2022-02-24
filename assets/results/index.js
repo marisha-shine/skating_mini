@@ -33,7 +33,10 @@ async function init() {
             if (group.type == 'cup'){
                 result = memberPlaces.reduce( ( p, c ) => p + c, 0 );
             } else {
-                result = average(memberPlaces).toFixed(1) || 0;
+                result = average(memberPlaces) || 0;
+                if (result != 0) {
+                    result = result.toFixed(1);
+                }
             }
             let memberRatesByDanceName = groupByKey(memberRates, 'dance');
             let judging = '';
