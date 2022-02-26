@@ -94,7 +94,7 @@ function danceSelected(groupId, danceId){
     for (let i = 0; i < members.length; i++) {
         let member = members[i];
         let showMember = member.id;
-        if (group.sortOrder == 23) {
+        if (group.sortOrder == 23 || group.sortOrder == 22) {
             showMember += ` ${member.name}`;
         }  
         memberList.innerHTML += 
