@@ -92,10 +92,14 @@ function danceSelected(groupId, danceId){
         }
     }
     for (let i = 0; i < members.length; i++) {
-        let member = members[i];    
+        let member = members[i];
+        let showMember = member.id;
+        if (group.sortOrder == 23) {
+            showMember += ` ${member.name}`;
+        }  
         memberList.innerHTML += 
         `<div class="col-3 border p-0 mb-3 bg-info">
-            <p class="text-center">№${member.number}</p>
+            <p class="text-center">№${showMember}</p>
             <select id="place_${member.id}" class="form-select place-select" aria-label="" onfocus="this.oldvalue=this.value;" onchange="placeSelected(this);this.oldvalue=this.value;">
                 <option></option>
                 ${options}
