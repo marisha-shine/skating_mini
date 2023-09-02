@@ -123,7 +123,7 @@ module.exports = {
           return x.results.map(y => {
             return {
               ...y,
-              sportsman: createdSportsmen.find(z => z.number == x.number)?.id || existingSportsmen.find(z => z.number == x.number).id
+              sportsman: createdSportsmen.find(z => z.number == x.number) ? createdSportsmen.find(z => z.number == x.number).id : existingSportsmen.find(z => z.number == x.number).id
             };
           }); 
         })
