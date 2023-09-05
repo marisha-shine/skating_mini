@@ -12,6 +12,7 @@
     "grunt": "1.0.4",
     "iconv-lite": "^0.6.3",
     "moment": "^2.29.4",
+    "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "sails": "^1.5.2",
     "sails-hook-grunt": "^5.0.0",
